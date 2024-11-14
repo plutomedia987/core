@@ -205,7 +205,7 @@ class AlarmControlPanelEntity(Entity, cached_properties=CACHED_PROPERTIES_WITH_A
             "is setting state directly which will stop working in HA Core 2025.11."
             f" Entity {self.entity_id} ({type(self)}) should implement the 'alarm_state'"
             " property and return its state using the AlarmControlPanelState enum.",
-            core_integration_behavior=ReportBehavior.ERROR,
+            core_integration_behavior=ReportBehavior.LOG,
             custom_integration_behavior=ReportBehavior.LOG,
         )
 
