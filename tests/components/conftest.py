@@ -734,5 +734,3 @@ def check_translations(ignore_translations: str | list[str]) -> Generator[None]:
     for description in translation_errors.values():
         if description not in {"used", "unused"}:
             pytest.fail(description)
-
-    pytest.fail("forced error")
