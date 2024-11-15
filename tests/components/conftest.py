@@ -583,6 +583,14 @@ async def _validate_translation(
     """Raise if translation doesn't exist."""
     full_key = f"component.{component}.{category}.{key}"
     translations = await async_get_translations(hass, "en", category, [component])
+    if component == "cloud":
+        # Attempt to debug flaky tests in cloud
+        import logging  # pylint: disable=import-outside-toplevel
+
+        logging.getLogger(__name__).warning(
+            "Translation for %s (%s): %s", component, category, translations
+        )
+
     if (translation := translations.get(full_key)) is not None:
         _validate_translation_placeholders(
             full_key, translation, description_placeholders, translation_errors
@@ -726,3 +734,5 @@ def check_translations(ignore_translations: str | list[str]) -> Generator[None]:
     for description in translation_errors.values():
         if description not in {"used", "unused"}:
             pytest.fail(description)
+
+    pytest.fail("forced error")
